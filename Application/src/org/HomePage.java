@@ -1,5 +1,5 @@
 package org;
-//My name is Simmigon
+
 import java.awt.CardLayout;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
