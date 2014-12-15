@@ -1,6 +1,5 @@
 package org;
 //Where am I?
-//my name is shaurice
 import java.awt.Graphics;
 
 import javax.imageio.ImageIO;
