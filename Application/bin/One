@@ -1,0 +1,179 @@
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.PojoProperties;
+import org.eclipse.core.databinding.observable.Realm;
+import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.DateTime;
+import javax.swing.JButton;
+import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.swt.widgets.TrayItem;
+import org.eclipse.swt.widgets.Canvas;
+import java.awt.Container;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.ui.forms.widgets.Section;
+
+
+public class One {
+	private DataBindingContext m_bindingContext;
+
+	protected Shell shlTopFlightSearch;
+	private Text text;
+	private Text text_1;
+	private Label lblNewLabel;
+	private final FormToolkit formToolkit = new FormToolkit(Display.getDefault());
+
+	/**
+	 * Launch the application.
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		Display display = Display.getDefault();
+		Realm.runWithDefault(SWTObservables.getRealm(display), new Runnable() {
+			public void run() {
+				try {
+					One window = new One();
+					window.open();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Open the window.
+	 */
+	public void open() {
+		Display display = Display.getDefault();
+		createContents();
+		shlTopFlightSearch.open();
+		shlTopFlightSearch.layout();
+		while (!shlTopFlightSearch.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				display.sleep();
+			}
+		}
+	}
+
+	/**
+	 * Create contents of the window.
+	 */
+	protected void createContents() {
+		shlTopFlightSearch = new Shell();
+		shlTopFlightSearch.setBackgroundMode(SWT.INHERIT_DEFAULT);
+		shlTopFlightSearch.setFullScreen(true);
+		shlTopFlightSearch.setSize(1025, 600);
+		shlTopFlightSearch.setText("Top Flight Search");
+		shlTopFlightSearch.setLayout(null);
+		shlTopFlightSearch.setBackgroundImage(SWTResourceManager.getImage("C:\\Users\\reesey\\Pictures\\imagesD0130DNS.jpg"));
+		
+		
+		Composite composite = new Composite(shlTopFlightSearch, SWT.NONE);
+		composite.setBounds(0, 0, 784, 25);
+		
+		Button btnNewButton = new Button(composite, SWT.NONE);
+		btnNewButton.setBounds(0, 0, 85, 25);
+		btnNewButton.setText("Search Flights");
+		
+		lblNewLabel = new Label(shlTopFlightSearch, SWT.NONE);
+		lblNewLabel.setBounds(173, 150, 169, 15);
+		lblNewLabel.setText("Flying From");
+		
+		text = new Text(shlTopFlightSearch, SWT.BORDER);
+		text.setToolTipText("City");
+		text.setBounds(173, 171, 242, 21);
+		
+		Label lblNewLabel_1 = new Label(shlTopFlightSearch, SWT.NONE);
+		lblNewLabel_1.setBounds(525, 150, 190, 15);
+		lblNewLabel_1.setText("Flying to");
+		
+		text_1 = new Text(shlTopFlightSearch, SWT.BORDER);
+		text_1.setToolTipText("City");
+		text_1.setBounds(525, 171, 242, 21);
+		
+		Label lblNewLabel_2 = new Label(shlTopFlightSearch, SWT.NONE);
+		lblNewLabel_2.setBounds(128, 253, 97, 15);
+		lblNewLabel_2.setText("Departing");
+		
+		DateTime dateTime = new DateTime(shlTopFlightSearch, SWT.BORDER);
+		dateTime.setBounds(128, 274, 114, 24);
+		
+		Label lblNewLabel_3 = new Label(shlTopFlightSearch, SWT.NONE);
+		lblNewLabel_3.setBounds(356, 253, 97, 15);
+		lblNewLabel_3.setText("Returning");
+		
+		DateTime dateTime_1 = new DateTime(shlTopFlightSearch, SWT.BORDER);
+		dateTime_1.setBounds(356, 274, 114, 24);
+		
+		Label lblNewLabel_4 = new Label(shlTopFlightSearch, SWT.NONE);
+		lblNewLabel_4.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.NORMAL));
+		lblNewLabel_4.setBounds(577, 253, 108, 15);
+		lblNewLabel_4.setText("Number of Adults");
+		
+		Spinner spinner = new Spinner(shlTopFlightSearch, SWT.BORDER);
+		spinner.setMaximum(10);
+		spinner.setBounds(577, 274, 47, 22);
+		
+		Label lblNewLabel_5 = new Label(shlTopFlightSearch, SWT.NONE);
+		lblNewLabel_5.setBounds(748, 253, 108, 15);
+		lblNewLabel_5.setText("Number of Children");
+		
+		Spinner spinner_1 = new Spinner(shlTopFlightSearch, SWT.BORDER);
+		spinner_1.setMaximum(10);
+		spinner_1.setBounds(758, 274, 47, 22);
+		
+		Button btnNewButton_1 = new Button(shlTopFlightSearch, SWT.NONE);
+		btnNewButton_1.setBounds(934, 0, 75, 25);
+		btnNewButton_1.setText("Support");
+		
+		Button btnNewButton_2 = new Button(shlTopFlightSearch, SWT.NONE);
+		btnNewButton_2.setBounds(864, 0, 75, 25);
+		btnNewButton_2.setText("Account");
+		
+		Button btnNewButton_3 = new Button(shlTopFlightSearch, SWT.NONE);
+		btnNewButton_3.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+			}
+		});
+		btnNewButton_3.setBounds(790, 0, 75, 25);
+		btnNewButton_3.setText("Home");
+		
+		Button btnNewButton_4 = new Button(shlTopFlightSearch, SWT.NONE);
+		btnNewButton_4.setSelection(true);
+		btnNewButton_4.setBounds(340, 87, 75, 25);
+		formToolkit.adapt(btnNewButton_4, true, true);
+		btnNewButton_4.setText("Roundtrip");
+		
+		Button btnNewButton_5 = new Button(shlTopFlightSearch, SWT.NONE);
+		btnNewButton_5.setSelection(true);
+		btnNewButton_5.setBounds(421, 87, 75, 25);
+		formToolkit.adapt(btnNewButton_5, true, true);
+		btnNewButton_5.setText("One Way");
+		
+		Button btnNewButton_6 = new Button(shlTopFlightSearch, SWT.NONE);
+		btnNewButton_6.setSelection(true);
+		btnNewButton_6.setBounds(502, 87, 129, 25);
+		formToolkit.adapt(btnNewButton_6, true, true);
+		btnNewButton_6.setText("Multiple Destination");
+		m_bindingContext = initDataBindings();
+
+	}
+	protected DataBindingContext initDataBindings() {
+		DataBindingContext bindingContext = new DataBindingContext();
+		//
+		return bindingContext;
+	}
+}
