@@ -16,7 +16,7 @@ public static JPanel panel;
 	}
 	
 	public  static JPanel getBackground(){
-	{
+	{//"C:\\Users\\Flagg\\Pictures\\wrapperback.jpg"
 		try {
 			img=(ImageIO.read(new File(
 					"C:\\Users\\reesey\\Pictures\\usvi-beachview5__large.jpg")));
