@@ -50,9 +50,8 @@ public class SearchFlight extends HomePage {
 	int numOfTickets = 0;
 
 	SearchFlight() {
-
-		base = new JPanel();
-		frame.setContentPane(base);
+		frame.setContentPane(BackgoundTest.getBackground());
+		base = BackgoundTest.getBackground();
 		frame.getContentPane().setLayout(null);
 
 	}
@@ -165,25 +164,9 @@ public class SearchFlight extends HomePage {
 		System.out.print(HomePage.customerFlights);
 	}
 
-	{
-		base = new JPanel()
-
-		{
-			@Override
-			protected void paintComponent(Graphics g) {
-				super.paintComponent(g);
-				if (getImg() != null) {
-					int width = base.getWidth();
-					int height = base.getHeight();
-					// and do the drawing here:
-					g.drawImage(getImg(), 0, 0, width, height, base);
-				}
-			}
-
-		};
-	}
-
-	JPanel getBase() {
-		return base;
+	
+	public static void main(String[]arg){
+		SearchFlight testing= new SearchFlight();
+		testing.getSearch("atlanta","fayetteville");
 	}
 }

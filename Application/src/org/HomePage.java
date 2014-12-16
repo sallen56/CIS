@@ -1,5 +1,5 @@
 package org;
-//my mi
+
 import java.awt.CardLayout;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -149,6 +149,7 @@ public class HomePage extends JFrame {
 	private JPanel adminFlight;
 
 	// Method that creates the frame and adds the initial content of the frame
+	// the application starts with the log in page
 	protected HomePage() {
 
 		frame = new JFrame();
@@ -161,183 +162,130 @@ public class HomePage extends JFrame {
 		view.show(parent, "Login");
 
 		// setting the image for the login view page
-		{
-			try {
-				setImg(ImageIO.read(new File(
-						"C:\\Users\\reesey\\Pictures\\vacations.jpg")));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			{
-				loginView = new JPanel()
 
-				{
-					@Override
-					protected void paintComponent(Graphics g) {
-						super.paintComponent(g);
-						if (getImg() != null) {
-							int width = loginView.getWidth();
-							int height = loginView.getHeight();
-							// and do the drawing here:
-							g.drawImage(getImg(), 0, 0, width, height,
-									loginView);
-						}
+		// creating the panel loginView with the call name Login
+		loginView = BackgoundTest.getBackground();
+		loginView.setLayout(null);
+		parent.add(loginView, "Login");
+
+		userLogin = new JLabel("User Login");
+		userLogin.setFont(new Font("Tahoma", Font.BOLD, 12));
+		userLogin.setBounds(223, 161, 223, 14);
+		loginView.add(userLogin);
+
+		username = new JTextField();
+		username.setBounds(223, 206, 189, 20);
+		loginView.add(username);
+		username.setColumns(10);
+
+		userName = new JLabel("User Name");
+		userName.setFont(new Font("Tahoma", Font.BOLD, 12));
+		userName.setBounds(125, 207, 76, 18);
+		loginView.add(userName);
+
+		password = new JPasswordField();
+		password.setBounds(223, 237, 189, 20);
+		loginView.add(password);
+
+		pword = new JLabel("Password");
+		pword.setFont(new Font("Tahoma", Font.BOLD, 12));
+		pword.setBounds(125, 236, 76, 21);
+		loginView.add(pword);
+
+		btnLogin = new JButton("Login");
+		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnLogin.setBounds(223, 279, 189, 23);
+		loginView.add(btnLogin);
+
+		// setting login action to check if the username and password is
+		// correct if correct user can login. if the user is an admin the
+		// will see
+		// admin page else the user will see the customer view page
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (checkLogin(username.getText(), password.getText()) == true) {
+					if (isAdmin == true) {
+						view.show(parent, "Admin View");
+					} else {
+						view.show(parent, "Customer View");
 					}
+				}
 
-				};
+				else
+					JOptionPane.showMessageDialog(null,
+							"Incorrect username or Password please try again");
+
 			}
-			// creating the panel loginView with the call name Login
-			loginView.setLayout(null);
-			parent.add(loginView, "Login");
+		});
 
-			userLogin = new JLabel("User Login");
-			userLogin.setFont(new Font("Tahoma", Font.BOLD, 12));
-			userLogin.setBounds(223, 161, 223, 14);
-			loginView.add(userLogin);
+		btnForgot = new JButton("Forgot Username/ Password");
+		btnForgot.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnForgot.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				view.show(parent, "Lookup");
 
-			username = new JTextField();
-			username.setBounds(223, 206, 189, 20);
-			loginView.add(username);
-			username.setColumns(10);
+			}
+		});
+		btnForgot.setBounds(220, 350, 206, 23);
+		loginView.add(btnForgot);
 
-			userName = new JLabel("User Name");
-			userName.setFont(new Font("Tahoma", Font.BOLD, 12));
-			userName.setBounds(125, 207, 76, 18);
-			loginView.add(userName);
+		btnNewUser = new JButton("New User");
+		btnNewUser.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnNewUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				view.show(parent, "New Account");
+			}
+		});
+		btnNewUser.setBounds(467, 279, 189, 23);
+		loginView.add(btnNewUser);
 
-			password = new JPasswordField();
-			password.setBounds(223, 237, 189, 20);
-			loginView.add(password);
+		btnLogin_1 = new JButton("Login");
+		btnLogin_1.setBounds(838, 0, 89, 29);
+		loginView.add(btnLogin_1);
+		btnLogin_1.setFont(new Font("Tahoma", Font.BOLD, 11));
 
-			pword = new JLabel("Password");
-			pword.setFont(new Font("Tahoma", Font.BOLD, 12));
-			pword.setBounds(125, 236, 76, 21);
-			loginView.add(pword);
-
-			btnLogin = new JButton("Login");
-			btnLogin.setFont(new Font("Tahoma", Font.BOLD, 11));
-			btnLogin.setBounds(223, 279, 189, 23);
-			loginView.add(btnLogin);
-
-			// setting login action to check if the username and password is
-			// correct if correct user can login. if the user is an admin the
-			// will see
-			// admin page else the user will see the customer view page
-			btnLogin.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					if (checkLogin(username.getText(), password.getText()) == true) {
-						if (isAdmin == true) {
-							view.show(parent, "Admin View");
-						} else {
-							view.show(parent, "Customer View");
-						}
-					}
-
-					else
-						JOptionPane
-								.showMessageDialog(null,
-										"Incorrect username or Password please try again");
-
-				}
-			});
-
-			btnForgot = new JButton("Forgot Username/ Password");
-			btnForgot.setFont(new Font("Tahoma", Font.BOLD, 11));
-			btnForgot.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					view.show(parent, "Lookup");
-
-				}
-			});
-			btnForgot.setBounds(220, 350, 206, 23);
-			loginView.add(btnForgot);
-
-			btnNewUser = new JButton("New User");
-			btnNewUser.setFont(new Font("Tahoma", Font.BOLD, 11));
-			btnNewUser.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					view.show(parent, "New Account");
-				}
-			});
-			btnNewUser.setBounds(467, 279, 189, 23);
-			loginView.add(btnNewUser);
-
-			btnLogin_1 = new JButton("Login");
-			btnLogin_1.setBounds(838, 0, 89, 29);
-			loginView.add(btnLogin_1);
-			btnLogin_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-
-			loginHome = new JButton("Home");
-			loginHome.setBounds(920, 0, 89, 29);
-			loginView.add(loginHome);
-			loginHome.setFont(new Font("Tahoma", Font.BOLD, 11));
-			loginHome.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					if (isLogedin == true) {
-						if (isAdmin == true) {
-							view.show(parent, "Admin View");
-						} else
-							view.show(parent, "Customer View");
+		loginHome = new JButton("Home");
+		loginHome.setBounds(920, 0, 89, 29);
+		loginView.add(loginHome);
+		loginHome.setFont(new Font("Tahoma", Font.BOLD, 11));
+		loginHome.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (isLogedin == true) {
+					if (isAdmin == true) {
+						view.show(parent, "Admin View");
 					} else
-						view.show(parent, "Login");
+						view.show(parent, "Customer View");
+				} else
+					view.show(parent, "Login");
 
-				}
-			});
-			btnLogin_1.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					if (isLogedin == true) {
-						JOptionPane.showMessageDialog(null,
-								"You are already logged in");
-						if (isAdmin == true) {
-							view.show(parent, "Admin View");
-						} else
-							view.show(parent, "Customer View");
+			}
+		});
+		btnLogin_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (isLogedin == true) {
+					JOptionPane.showMessageDialog(null,
+							"You are already logged in");
+					if (isAdmin == true) {
+						view.show(parent, "Admin View");
 					} else
-						view.show(parent, "Login");
+						view.show(parent, "Customer View");
+				} else
+					view.show(parent, "Login");
 
-				}
-			});
+			}
+		});
 
-			// Method to set background for LoginView panel
-			// to change background for each panel the method must be rewritten
-			// each time
+		// Method to set background for LoginView panel
+		// to change background for each panel the method must be rewritten
+		// each time
 
-		}
+		// }
 
 		// creating the registration view register, with the name New Account
 
 		// setting the background image of the register page
-		{
-			try {
-				setImg(ImageIO.read(new File(
-						"C:\\Users\\reesey\\Pictures\\vacations.jpg")));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 
-			// overriding the graphics method to set the register page with the
-			// background image
-			{
-				register = new JPanel()
-
-				{
-					@Override
-					protected void paintComponent(Graphics g) {
-						super.paintComponent(g);
-						if (getImg() != null) {
-							int width = register.getWidth();
-							int height = register.getHeight();
-							// and do the drawing here:
-							g.drawImage(getImg(), 0, 0, width, height, register);
-						}
-					}
-
-				};
-			}
-		}
-
+		register = BackgoundTest.getBackground();
 		register.setLayout(null);
 		parent.add(register, "New Account");
 
@@ -538,37 +486,7 @@ public class HomePage extends JFrame {
 		// creating the customerView panel this pannel and the admin panel will
 		// be the same with a few minor changes
 
-		{
-			try {
-				setImg(ImageIO.read(new File(
-						"C:\\Users\\reesey\\Pictures\\vacations.jpg")));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			// overriding the graphics method to set the customerView page with
-			// the background image
-			{
-				customerView = new JPanel()
-
-				{
-					@Override
-					protected void paintComponent(Graphics g) {
-						super.paintComponent(g);
-						if (getImg() != null) {
-							int width = customerView.getWidth();
-							int height = customerView.getHeight();
-							// and do the drawing here:
-							g.drawImage(getImg(), 0, 0, width, height,
-									customerView);
-						}
-					}
-
-				};
-			}
-		}
-
+		customerView = BackgoundTest.getBackground();
 		customerView.setLayout(null);
 		parent.add(customerView, "Customer View");
 
@@ -673,37 +591,7 @@ public class HomePage extends JFrame {
 
 		// creating the admin view
 
-		{
-			try {
-				setImg(ImageIO.read(new File(
-						"C:\\Users\\reesey\\Pictures\\vacations.jpg")));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			// overriding the graphics method to set the adminView page with the
-			// background image
-			{
-				adminView = new JPanel()
-
-				{
-					@Override
-					protected void paintComponent(Graphics g) {
-						super.paintComponent(g);
-						if (getImg() != null) {
-							int width = adminView.getWidth();
-							int height = adminView.getHeight();
-							// and do the drawing here:
-							g.drawImage(getImg(), 0, 0, width, height,
-									adminView);
-						}
-					}
-
-				};
-			}
-		}
-
+		adminView = BackgoundTest.getBackground();
 		parent.add(adminView, "Admin View");
 		adminView.setLayout(null);
 
@@ -784,36 +672,7 @@ public class HomePage extends JFrame {
 
 		// creating the mainpanel view named home
 
-		{
-			try {
-				setImg(ImageIO.read(new File(
-						"C:\\Users\\reesey\\Pictures\\vacations.jpg")));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			// overriding the graphics method to set the mainPanel page with the
-			// background image
-			{
-				mainPanel = new JPanel()
-
-				{
-					@Override
-					protected void paintComponent(Graphics g) {
-						super.paintComponent(g);
-						if (getImg() != null) {
-							int width = mainPanel.getWidth();
-							int height = mainPanel.getHeight();
-							// and do the drawing here:
-							g.drawImage(getImg(), 0, 0, width, height,
-									mainPanel);
-						}
-					}
-
-				};
-			}
-		}
+		mainPanel = BackgoundTest.getBackground();
 		mainPanel.setLayout(null);
 		parent.add(mainPanel, "Search");
 		roundTrip.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -869,7 +728,7 @@ public class HomePage extends JFrame {
 
 				new SearchFlight().getSearch(dept_list.getSelectedItem()
 						.toString(), arrive_list.getSelectedItem().toString());
-						
+
 				System.out.println(customerFlights);
 				getModel(customerFlights).fireTableDataChanged();
 
@@ -905,37 +764,7 @@ public class HomePage extends JFrame {
 		// creating the lookup page view that will call methods of retrieving
 		// password
 
-		{
-			try {
-				setImg(ImageIO.read(new File(
-						"C:\\Users\\reesey\\Pictures\\vacations.jpg")));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			// overriding the graphics method to set the register page with the
-			// background image
-			{
-				lookupView = new JPanel()
-
-				{
-					@Override
-					protected void paintComponent(Graphics g) {
-						super.paintComponent(g);
-						if (getImg() != null) {
-							int width = lookupView.getWidth();
-							int height = lookupView.getHeight();
-							// and do the drawing here:
-							g.drawImage(getImg(), 0, 0, width, height,
-									lookupView);
-						}
-					}
-
-				};
-			}
-		}
-
+		lookupView = BackgoundTest.getBackground();
 		parent.add(lookupView, "Lookup");
 		lookupView.setLayout(null);
 
@@ -1056,13 +885,13 @@ public class HomePage extends JFrame {
 
 		Vector<Vector<String>> result = new Vector<Vector<String>>();
 		Vector<String> data = new Vector<String>();
-		for (int i = 0; i < list.size(); i++){
-			for (int row = 0; row < 8; row++){
+		for (int i = 0; i < list.size(); i++) {
+			for (int row = 0; row < 8; row++) {
 				data.addElement(list.get(i)[row]);
 			}
 			result.addElement(data);
 		}
-		
+
 		model = new DefaultTableModel(result, info);
 		model.fireTableDataChanged();
 		return model;
