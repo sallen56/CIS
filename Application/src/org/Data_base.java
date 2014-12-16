@@ -77,10 +77,8 @@ public  class Data_base implements User_Database  {
 					return false;
 					
 			}
-				public static void main(String[]args){
-					Data_base test= new Data_base();
-					test.getLogin("Goldy", "yesss", "happy people");
-				}
+			
+	
 				
 				// method to check if a user is an admin
 				public boolean isAdmin(String username){
@@ -166,7 +164,7 @@ public  class Data_base implements User_Database  {
 			            		con = DriverManager.getConnection(connectionUrl);
 			            
 			            		// Create and execute an SQL statement that returns some data.
-			            		String SQL = " Select  * from flight where dept_city='" + dept  + "' and Dest_City='" + arrival+ "';";
+			            		String SQL = " Select  * from flight where [Departing City]='" + dept  + "' and [Destination City]='" + arrival+ "';";
 			            		stmt = con.createStatement();
 			            		rs = stmt.executeQuery(SQL);
 			            		TableModel model;
@@ -210,7 +208,7 @@ public  class Data_base implements User_Database  {
 				            		String SQL = " Select  * from flight;";
 				            		stmt = con.createStatement();
 				            		rs = stmt.executeQuery(SQL);
-				            		TableModel model;
+				            		DefaultTableModel model;
 				            	
 				            		model=buildTableModel(rs);
 				            		
@@ -238,18 +236,16 @@ public  class Data_base implements User_Database  {
 					}
 					
 				
-				public void updateFlight(String flightnumber, String location, String value) {
+				public void updateFlight(String flightnumber, String column, String value) {
 					try {
 			        	// Establish the connection.
 			        		Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 			            		con = DriverManager.getConnection(connectionUrl);
 			            
 			            		// Create and execute an SQL statement that returns some data.
-			            	//	String SQL = "update table flights set"+ location+"'='"+ value
+			            		String SQL = "Update flight set["+column + "]='" +value+"' where [flight number] ='"+ Integer.parseInt(flightnumber)+"';";
 			            		stmt = con.createStatement();
-			            	//	stmt.execute(SQL);
-			            		JOptionPane.showMessageDialog(null, "Created User Please Login");
-			            		success=true;
+			            		stmt.execute(SQL);
 			            		
 			            		
 			            		
@@ -259,10 +255,7 @@ public  class Data_base implements User_Database  {
 					// Handle any errors that may have occurred.
 					catch (Exception e) {
 						e.printStackTrace();
-						JOptionPane.showMessageDialog(null, "Sorry Something went wrong please check values and try again");
-						success=false;
-						
-					
+			
 					}
 
 	 				finally {
@@ -322,7 +315,7 @@ public  class Data_base implements User_Database  {
 			            		con = DriverManager.getConnection(connectionUrl);
 			            
 			            		// Create and execute an SQL statement that returns some data.
-			            		String SQL = " select tickets from flight where Flight_Num='"+flightNum+"';";
+			            		String SQL = " select tickets from flight where [Flight Number]='"+flightNum+"';";
 			            		stmt = con.createStatement();
 			            		rs = stmt.executeQuery(SQL);
 			            		
@@ -333,7 +326,7 @@ public  class Data_base implements User_Database  {
 			            		}
 			            		
 			            			
-			            		String input = " update flight set tickets='" +returnresult+ "'where Flight_Num='"+ flightNum+"';";
+			            		String input = " update flight set tickets='" +returnresult+ "'where [Flight Number]='"+ flightNum+"';";
 			            		stmt = con.createStatement();
 			            		stmt.execute(input);
 			        	}
@@ -358,20 +351,20 @@ public  class Data_base implements User_Database  {
 			            		con = DriverManager.getConnection(connectionUrl);
 			            
 			            		// Create and execute an SQL statement that returns some data.
-			            		String SQL = " select Dept_City,Dest_City,Dept_Dte from flight;";
+			            		String SQL = " select [Departing City],[Destination City] from flight;";
 			            		stmt = con.createStatement();
 			            		rs = stmt.executeQuery(SQL);
 			            		
 			            		listModel = new DefaultComboBoxModel();
 			            		listModel2 = new DefaultComboBoxModel();
-			            		listModel3= new DefaultComboBoxModel();
+			            	
 			            		
 			            		
 			            		 
 			            		while(rs.next()){
 			            			listModel.addElement(rs.getString(1));
 			            			listModel2.addElement(rs.getString(2));
-			            			listModel3.addElement(rs.getString(3));
+			            		
 			            		}
 			            			
 			            		

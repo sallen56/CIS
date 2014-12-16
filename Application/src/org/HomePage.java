@@ -491,17 +491,37 @@ public class HomePage extends JFrame {
 		customerView.setLayout(null);
 		parent.add(customerView, "Customer View");
 
-		userFlights = new JPanel();
+		userFlights =BackgoundTest.getBackground();
 		parent.add(userFlights, "UserFlight");
 		userFlights.setLayout(null);
 
 		JButton btnHome_1 = new JButton("Home");
 		btnHome_1.setBounds(920, 0, 89, 23);
 		userFlights.add(btnHome_1);
+		btnHome_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (isLogedin == true) {
+					if (isAdmin == true) {
+						view.show(parent, "Admin View");
+					} else
+						view.show(parent, "Customer View");
+				} else
+					view.show(parent, "Login");
+
+			}
+		});
 
 		JButton userLogout = new JButton("Logout");
 		userLogout.setBounds(833, 0, 89, 23);
 		userFlights.add(userLogout);
+		userLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				isLogedin=false;
+				isAdmin=false;
+				view.show(parent, "Login");
+					
+			}
+		});
 
 		JLabel yourAccount = new JLabel("Your Account");
 		yourAccount.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -522,7 +542,9 @@ public class HomePage extends JFrame {
 				if (e.getItem().equals("Search Flights")) {
 					view.show(parent, "Search");
 
-				} else if (e.getItem().equals("My Flights")) {
+				} 
+				else 
+					if (e.getItem().equals("My Flights")) {
 					table_2 = new JTable(getModel(customerFlights));
 					model.fireTableDataChanged();
 					table_2.addMouseListener(new MouseAdapter() {
@@ -596,10 +618,30 @@ public class HomePage extends JFrame {
 		btnLogout.setBounds(836, 0, 89, 25);
 		adminView.add(btnLogout);
 		btnLogout.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				isAdmin = false;
+				isLogedin = false;
+				view.show(parent, "Login");
+
+			}
+		});
 
 		JButton adminBtn1 = new JButton("Home");
 		adminBtn1.setBounds(920, 0, 89, 25);
 		adminView.add(adminBtn1);
+		adminBtn1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (isLogedin == true) {
+					if (isAdmin == true) {
+						view.show(parent, "Admin View");
+					} else
+						view.show(parent, "Customer View");
+				} else
+					view.show(parent, "Login");
+
+			}
+		});
 
 		adminBtn1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		JLabel yourAccount1 = new JLabel("Your Account");
@@ -621,9 +663,11 @@ public class HomePage extends JFrame {
 				if (e.getItem().equals("Search Flights")) {
 					view.show(parent, "Search");
 
-				} else if (e.getItem().equals("My Flights")) {
+				} 
+				else 
+					if (e.getItem().equals("My Flights")) {
 					table = new JTable(getModel(customerFlights));
-					model.fireTableDataChanged();
+				//	model.fireTableDataChanged();
 					table.addMouseListener(new MouseAdapter() {
 						@SuppressWarnings("unchecked")
 						public void mouseClicked(MouseEvent e) {

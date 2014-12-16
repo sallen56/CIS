@@ -34,10 +34,16 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -47,6 +53,7 @@ public class SearchFlight extends HomePage {
 	JPanel base;
 	String[] values;
 	List<String[]> list = new Vector<String[]>();
+	String[] addRow;
 	// ArrayList test= new ArrayList();
 	TableModel model;
 	JTable create;
@@ -101,9 +108,10 @@ public class SearchFlight extends HomePage {
 					value[i] = one.table.getValueAt(0, i).toString();
 				}
 
-				if (one.bookFlight(value[0], numOfTickets) == 0) {
+				if (one.bookFlight(value[0], numOfTickets) <= 0) {
 					JOptionPane.showMessageDialog(null, "Sorry Flight Is Full");
-				} else {
+				}
+				else {
 					int result = JOptionPane.showConfirmDialog(null,
 							"would you like to add flight to your account",
 							"Add Flight?", JOptionPane.YES_NO_OPTION);
@@ -121,11 +129,11 @@ public class SearchFlight extends HomePage {
 					setValues(value);
 					list.add(value);
 					addToArraylist((list));
-					for (int i = 0; i < value.length; i++)
+					/*for (int i = 0; i < value.length; i++)
 						HomePage.model.fireTableCellUpdated(
 								HomePage.getModel(customerFlights)
 										.getRowCount() + 1, i);
-
+*/
 					JOptionPane.showMessageDialog(null,
 							"Flight is added to your account");
 					frame.setVisible(false);
@@ -167,30 +175,16 @@ public class SearchFlight extends HomePage {
 		admin = new JScrollPane(one.flighttable);
 		admin.setBounds(200, 200, 800, 243);
 		frame.getContentPane().add(admin);
-		JButton btnNewButton = new JButton("ADD");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		one.flighttable.getCellSelectionEnabled();
+		
+		one.flighttable.getModel().addTableModelListener(new TableModelListener(){
+			public void tableChanged(TableModelEvent e) {
+				one.updateFlight(one.flighttable.getValueAt(one.flighttable.getEditingRow(), 0).toString(), one.flighttable.getModel().getColumnName(one.flighttable.getEditingColumn()), 
+						one.flighttable.getModel().getValueAt(one.flighttable.getEditingRow(), one.flighttable.getEditingColumn()).toString());
 			}
 		});
-		btnNewButton.setBounds(920, 0, 89, 23);
-		frame.getContentPane().add(btnNewButton);
 
-		JButton btnNewButton_1 = new JButton("Update");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnNewButton_1.setBounds(833, 0, 89, 23);
-		frame.getContentPane().add(btnNewButton_1);
-
-		JButton btnNewButton_2 = new JButton("Delete");
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnNewButton_2.setBounds(745, 0, 89, 23);
-		frame.getContentPane().add(btnNewButton_2);
-
+		
 		JLabel instructions = new JLabel(
 				"To make changes to the flights click the row you which to make changes to or delete and follow prompts. To add flights Click ADD");
 		instructions.setBounds(32, 34, 673, 23);
@@ -204,8 +198,8 @@ public class SearchFlight extends HomePage {
 		System.out.print(HomePage.customerFlights);
 	}
 
-	/*
-	 * public static void main(String[]arg){ SearchFlight testing= new
-	 * SearchFlight(); testing.adminSearch(); }
-	 */
+	
+	  public static void main(String[]arg){ SearchFlight testing= new
+	 SearchFlight(); testing.adminSearch(); }
+	 
 }
