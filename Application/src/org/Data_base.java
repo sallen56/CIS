@@ -238,8 +238,38 @@ public  class Data_base implements User_Database  {
 					}
 					
 				
-				public void updateFlight() {
-					// TODO Auto-generated method stub
+				public void updateFlight(String flightnumber, String location, String value) {
+					try {
+			        	// Establish the connection.
+			        		Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			            		con = DriverManager.getConnection(connectionUrl);
+			            
+			            		// Create and execute an SQL statement that returns some data.
+			            	//	String SQL = "update table flights set"+ location+"'='"+ value
+			            		stmt = con.createStatement();
+			            	//	stmt.execute(SQL);
+			            		JOptionPane.showMessageDialog(null, "Created User Please Login");
+			            		success=true;
+			            		
+			            		
+			            		
+			            		
+			        	}
+			        
+					// Handle any errors that may have occurred.
+					catch (Exception e) {
+						e.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Sorry Something went wrong please check values and try again");
+						success=false;
+						
+					
+					}
+
+	 				finally {
+	 						
+				    		if (stmt != null) try { stmt.close(); } catch(Exception e) {}
+				    		if (con != null) try { con.close(); } catch(Exception e) {}
+					}
 					
 				}
 				public void addFlight() {
@@ -393,6 +423,10 @@ public  class Data_base implements User_Database  {
 
 				    return new DefaultTableModel(data, columnNames);
 
+				}
+				public void updateFlight() {
+					// TODO Auto-generated method stub
+					
 				}
 			
 	
