@@ -852,11 +852,8 @@ public class HomePage extends JFrame {
 
 	}
 
-	protected BufferedImage getImg() {
-
-		return img;
-	}
-
+	
+// Method that is called to check if an user or an admin is logged in. If the user is logged in they do not have to relogin unless they logout
 	private boolean checkLogin(String username, String password) {
 
 		if ((username.equals("") || (password.equals("")) != true)
@@ -870,7 +867,7 @@ public class HomePage extends JFrame {
 		return false;
 
 	}
-
+// Method that builds a TableModel from the String[] list cusotmerflights to then create the table of added flights for the user and admin view to see
 	static DefaultTableModel getModel(List<String[]> list) {
 
 		Vector<String> info = new Vector<String>();
