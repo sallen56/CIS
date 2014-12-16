@@ -1,4 +1,5 @@
 package org;
+
 //Where am I?
 import java.awt.Graphics;
 
@@ -36,9 +37,13 @@ import javax.swing.table.TableModel;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class SearchFlight extends HomePage {
 	JScrollPane pane;
+	JScrollPane admin;
 	JPanel base;
 	String[] values;
 	List<String[]> list = new Vector<String[]>();
@@ -50,6 +55,9 @@ public class SearchFlight extends HomePage {
 	int numOfTickets = 0;
 
 	SearchFlight() {
+		super.setVisible(false);
+		getContentPane().setLayout(null);
+
 		frame.setContentPane(BackgoundTest.getBackground());
 		base = BackgoundTest.getBackground();
 		frame.getContentPane().setLayout(null);
@@ -88,29 +96,27 @@ public class SearchFlight extends HomePage {
 		one.table.addMouseListener(new MouseAdapter() {
 			@SuppressWarnings("unchecked")
 			public void mouseClicked(MouseEvent e) {
-				String[]value = new String[one.table.getColumnCount()];
+				String[] value = new String[one.table.getColumnCount()];
 				for (int i = 0; i < one.table.getColumnCount(); i++) {
-						value[i] = one.table.getValueAt(0, i).toString();
+					value[i] = one.table.getValueAt(0, i).toString();
 				}
-				
-				if(one.bookFlight(value[0], numOfTickets) == 0){
+
+				if (one.bookFlight(value[0], numOfTickets) == 0) {
 					JOptionPane.showMessageDialog(null, "Sorry Flight Is Full");
-				}else{
-				int result = JOptionPane.showConfirmDialog(null,
-						"would you like to add flight to your account",
-						"Add Flight?", JOptionPane.YES_NO_OPTION);
-				if (result == JOptionPane.YES_OPTION) {
-					one.addItem = true;
-					System.out.println(numOfTickets);
-					 
-					
+				} else {
+					int result = JOptionPane.showConfirmDialog(null,
+							"would you like to add flight to your account",
+							"Add Flight?", JOptionPane.YES_NO_OPTION);
+					if (result == JOptionPane.YES_OPTION) {
+						one.addItem = true;
+						System.out.println(numOfTickets);
+
 						// System.out.println(value[i]);
 					}
-					
-				//		JOptionPane.showMessageDialog(null,
-					//			"Sorry Flight is full");
-				//	}
-					
+
+					// JOptionPane.showMessageDialog(null,
+					// "Sorry Flight is full");
+					// }
 
 					setValues(value);
 					list.add(value);
@@ -119,7 +125,6 @@ public class SearchFlight extends HomePage {
 						HomePage.model.fireTableCellUpdated(
 								HomePage.getModel(customerFlights)
 										.getRowCount() + 1, i);
-					
 
 					JOptionPane.showMessageDialog(null,
 							"Flight is added to your account");
@@ -135,18 +140,16 @@ public class SearchFlight extends HomePage {
 								.fireTableDataChanged();
 						System.out.println(HomePage.getModel(customerFlights)
 								.getRowCount());
+					} else {
+						one.addItem = false;
+						JOptionPane.showMessageDialog(null, "GOODBYE");
+						HomePage.addMore = false;
 					}
-				else {
-					one.addItem = false;
-					JOptionPane.showMessageDialog(null, "GOODBYE");
-					HomePage.addMore = false;
-				}
 
-			
-			}//end of else = 0
+				}// end of else = 0
 			}
 		});
-		
+
 	}
 
 	// SearchFlight(String testing){
@@ -158,15 +161,51 @@ public class SearchFlight extends HomePage {
 	// frame.getContentPane().add(scroll);
 	// }
 
+	void adminSearch() {
+
+		one.adminFlight();
+		admin = new JScrollPane(one.flighttable);
+		admin.setBounds(200, 200, 800, 243);
+		frame.getContentPane().add(admin);
+		JButton btnNewButton = new JButton("ADD");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnNewButton.setBounds(920, 0, 89, 23);
+		frame.getContentPane().add(btnNewButton);
+
+		JButton btnNewButton_1 = new JButton("Update");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnNewButton_1.setBounds(833, 0, 89, 23);
+		frame.getContentPane().add(btnNewButton_1);
+
+		JButton btnNewButton_2 = new JButton("Delete");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnNewButton_2.setBounds(745, 0, 89, 23);
+		frame.getContentPane().add(btnNewButton_2);
+
+		JLabel instructions = new JLabel(
+				"To make changes to the flights click the row you which to make changes to or delete and follow prompts. To add flights Click ADD");
+		instructions.setBounds(32, 34, 673, 23);
+		frame.getContentPane().add(instructions);
+
+	}
+
 	static void addToArraylist(List<String[]> one) {
 		for (int i = 0; i < one.size(); i++)
 			HomePage.customerFlights.add(one.get(i));
 		System.out.print(HomePage.customerFlights);
 	}
 
-	
-	public static void main(String[]arg){
-		SearchFlight testing= new SearchFlight();
-		testing.getSearch("atlanta","fayetteville");
-	}
+	/*
+	 * public static void main(String[]arg){ SearchFlight testing= new
+	 * SearchFlight(); testing.adminSearch(); }
+	 */
 }

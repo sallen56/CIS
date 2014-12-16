@@ -74,7 +74,6 @@ public class HomePage extends JFrame {
 	protected Data_base one = new Data_base();
 	private boolean isLogedin;
 	private boolean isAdmin;
-	private SearchFlight test;
 	private JToggleButton roundTrip = new JToggleButton("Round Trip");
 	private JToggleButton oneWay = new JToggleButton("One Way");
 	private JButton go = new JButton("GO");
@@ -147,6 +146,8 @@ public class HomePage extends JFrame {
 	private JTable table_2;
 	private JComboBox selection1;
 	private JPanel adminFlight;
+	private JPanel adminUpdate;
+	private JScrollPane masterFlights;
 
 	// Method that creates the frame and adds the initial content of the frame
 	// the application starts with the log in page
@@ -514,15 +515,14 @@ public class HomePage extends JFrame {
 		selection.addItem("Please Select");
 		selection.addItem("Search Flights");
 		selection.addItem("My Flights");
-		selection.addItem("Remove Flights");
-		selection.addItem("Update Information");
+	
 
 		selection.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getItem().equals("Search Flights")) {
 					view.show(parent, "Search");
 
-				} else if (selection.getSelectedItem().equals("My Flights")) {
+				} else if (e.getItem().equals("My Flights")) {
 					table_2 = new JTable(getModel(customerFlights));
 					model.fireTableDataChanged();
 					table_2.addMouseListener(new MouseAdapter() {
@@ -553,14 +553,7 @@ public class HomePage extends JFrame {
 					user.setBounds(90, 205, 782, 272);
 					userFlights.add(user);
 					view.show(parent, "UserFlight");
-				}
-
-				else if (selection.getSelectedItem().equals("Remove Flights")) {
-					// System.out.println(customerFlights.get(0));
-				} else if (selection.getSelectedItem().equals(
-						"Update Information")) {
-					// TODO
-				}
+				}		
 
 			}
 		});
@@ -589,8 +582,9 @@ public class HomePage extends JFrame {
 			}
 		});
 
-		// creating the admin view
-
+		// creating the admin view page and the admin update flight panel
+		
+		
 		adminView = BackgoundTest.getBackground();
 		parent.add(adminView, "Admin View");
 		adminView.setLayout(null);
@@ -627,18 +621,14 @@ public class HomePage extends JFrame {
 				if (e.getItem().equals("Search Flights")) {
 					view.show(parent, "Search");
 
-				} else if (selection1.getSelectedItem().equals("My Flights")) {
+				} else if (e.getItem().equals("My Flights")) {
 					table = new JTable(getModel(customerFlights));
 					model.fireTableDataChanged();
 					table.addMouseListener(new MouseAdapter() {
 						@SuppressWarnings("unchecked")
 						public void mouseClicked(MouseEvent e) {
-							int result = JOptionPane
-									.showConfirmDialog(
-											null,
-											"would you like to remove flight to your account",
-											"Add Flight?",
-											JOptionPane.YES_NO_OPTION);
+					int result = JOptionPane.showConfirmDialog(null,"would you like to remove flight to your account",
+							"Add Flight?",JOptionPane.YES_NO_OPTION);
 							if (result == JOptionPane.YES_OPTION) {
 								String[] value = new String[table
 										.getColumnCount()];
@@ -659,16 +649,19 @@ public class HomePage extends JFrame {
 					userFlights.add(administrator);
 					view.show(parent, "UserFlight");
 				}
-
-				else if (selection.getSelectedItem().equals("Remove Flights")) {
-					// System.out.println(customerFlights.get(0));
-				} else if (selection.getSelectedItem().equals(
-						"Update Information")) {
-					// TODO
+				
+				else 
+					if (e.getItem().equals("Update Flights")) {
+					new SearchFlight().adminSearch();
+	
 				}
 
 			}
 		});
+
+		
+		
+		
 
 		// creating the mainpanel view named home
 
@@ -682,6 +675,7 @@ public class HomePage extends JFrame {
 
 		oneWay.setBounds(436, 87, 94, 25);
 		mainPanel.add(oneWay);
+		
 		// populating data for flights into JLists
 
 		one.getFlights();

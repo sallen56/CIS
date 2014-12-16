@@ -29,7 +29,7 @@ public  class Data_base implements User_Database  {
 		JTable customer;
 		boolean addItem;
 		String valueTicket;
-		
+		JTable flighttable;
 	//	HomePage test= new HomePage();
 		// Create a variable for the connection string.
 				String connectionUrl = "jdbc:sqlserver://REESEY\\TEST:1433;" +
@@ -40,7 +40,7 @@ public  class Data_base implements User_Database  {
 				Statement stmt = null;
 				ResultSet rs = null;
 				CachedRowSetImpl crs ;
-				private JTable flighttable;
+				
 				
 				// method to login
 				public boolean login(String username, String password){
